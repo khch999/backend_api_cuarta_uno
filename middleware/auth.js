@@ -67,7 +67,7 @@ const authenticateToken = async (req, res, next) => {
         return res.status(500).json({
             success: false,
             message: 'Error de autenticación',
-            error: 'Error interno del servidor'
+            error: 'Error interno del servidor' //****
         });
     }
 };

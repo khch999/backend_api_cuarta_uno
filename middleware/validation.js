@@ -212,7 +212,7 @@ const validateJSON = (err, req, res, next) => {
         return res.status(400).json({
             success: false,
             message: 'JSON malformado',
-            error: 'La estructura del JSON enviado no es válida'
+            error: 'La estructura del JSON enviado no es válida'//  ********
         });
     }
     next(err);
@@ -289,6 +289,13 @@ const validateUserPartial = [
         .withMessage('Formato de teléfono inválido')
         .isLength({ min: 7, max: 20 })
         .withMessage('El teléfono debe tener entre 7 y 20 caracteres')
+];
+
+//validar id mascota
+const validatePetId = [
+    param('id')
+        .isInt({ min: 1 })
+        .withMessage('El ID debe ser un número entero positivo')
 ];
 
 module.exports = {

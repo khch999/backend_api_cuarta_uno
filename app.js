@@ -16,12 +16,13 @@ const { validateJSON, sanitizeInput, validateContentType } = require('./middlewa
 // Importar rutas
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
+const petRoutes = require('./routes/petRoutes');//ruta mascotas
 
 // Crear aplicación Express
 const app = express();
 
 // Configuración del puerto
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;     //*****
 const API_PREFIX = process.env.API_PREFIX || '/api/v1';
 
 /**
@@ -69,6 +70,7 @@ app.get('/', (req, res) => {
         endpoints: {
             users: `${API_PREFIX}/users`,
             auth: `${API_PREFIX}/auth`,
+            pets: `${API_PREFIX}/pets`,//ruta mascotas
             health: '/',
             docs: '/docs'
         }
@@ -103,6 +105,7 @@ app.get('/health', async (req, res) => {
 // Rutas de la API
 app.use(`${API_PREFIX}/users`, userRoutes);
 app.use(`${API_PREFIX}/auth`, authRoutes);
+app.use(`${API_PREFIX}/pets`, petRoutes);//ruta mascotas
 
 // Ruta para documentación básica
 app.get('/docs', (req, res) => {
@@ -125,7 +128,11 @@ app.get('/docs', (req, res) => {
             'GET /users/:id': 'Obtener usuario por ID',
             'POST /users': 'Crear nuevo usuario',
             'PUT /users/:id': 'Actualizar usuario',
-            'DELETE /users/:id': 'Eliminar usuario'
+            'DELETE /users/:id': 'Eliminar usuario',//en caso de error quitar pets y la coma
+
+            //Mascotas
+            'GET /pets': 'Obtener todas las mascotas',//ruta mascotas
+            'GET /pets/:id': 'Obtener mascota por ID' //ruta mascotas/id
         },
         examples: {
             register: {
@@ -156,6 +163,7 @@ app.use((req, res) => {
             health: '/',
             docs: '/docs',
             auth: `${API_PREFIX}/auth`,
+            pets: `${API_PREFIX}/pets`, //ruta mascotas
             users: `${API_PREFIX}/users`
         }
     });
