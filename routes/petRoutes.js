@@ -2,6 +2,21 @@ const express = require('express');
 const router = express.Router();
 const PetController = require('../controllers/petController');
 const {validatePetId} = require('../middleware/validation');
+const authenticateToken = require('../middleware/auth');
+
+/**
+ * @route GET /pets/my
+ * @description Obtiene todas las mascotas de un usuario específico por su id
+ * @returns {Object} Lista de mascotas por propietario
+ */
+router.get('/my', authenticateToken, PetController.getMyPets);
+
+/**
+ * @route GET /pets/:id
+ * @description Obtiene la ficha médica de una mascota específica
+ * @access Public
+ */
+router.get('/:id', PetController.getPetMedicalPage);
 
 /**
  * @route GET /pets
@@ -11,12 +26,5 @@ const {validatePetId} = require('../middleware/validation');
  * @returns {Object} Lista de mascotas con datos de propietario
  */
 router.get('/', PetController.getAllPets);
-
-/**
- * @route GET /pets/:id
- * @description Obtiene la ficha médica de una mascota específica
- * @access Public
- */
-router.get('/:id', PetController.getPetMedicalPage);
 
 module.exports = router;

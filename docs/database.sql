@@ -53,19 +53,21 @@ COMMENT='Tabla para almacenar información de usuarios';
 -- Insertar algunos usuarios de ejemplo para pruebas
 -- ===================================================================
 
--- Contraseña para todos los usuarios de ejemplo: "Password123!"
+-- Contraseña para todos los usuarios de ejemplo: "Admin123!"
 -- Hash generado con bcrypt (12 rounds)
 INSERT INTO usuarios (nombre, email, telefono, password) VALUES
-('Juan Pérez', 'juan.perez@ejemplo.com', '+52 55 1234-5678', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewmVg7BYMzfpcXSO'),
-('María García', 'maria.garcia@ejemplo.com', '+52 55 2345-6789', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewmVg7BYMzfpcXSO'),
+('Juan Pérez', 'juan.perez@ejemplo.com', '+52 55 1234-5678', '$2a$12$Jaqnh33bUDg2Q1s2cGMjsulJJGCyvjtrI7Pc0jJwJ8LEMpL97FIfW'),
+('María García', 'maria.garcia@ejemplo.com', '+52 55 2345-6789', '$2a$12$Jaqnh33bUDg2Q1s2cGMjsulJJGCyvjtrI7Pc0jJwJ8LEMpL97FIfW'),
 ('Carlos López', 'carlos.lopez@ejemplo.com', '+52 55 3456-7890', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewmVg7BYMzfpcXSO'),
 ('Ana Martínez', 'ana.martinez@ejemplo.com', '+52 55 4567-8901', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewmVg7BYMzfpcXSO'),
 ('Luis Rodríguez', 'luis.rodriguez@ejemplo.com', '+52 55 5678-9012', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewmVg7BYMzfpcXSO'),
 ('Elena Fernández', 'elena.fernandez@ejemplo.com', '+52 55 6789-0123', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewmVg7BYMzfpcXSO'),
-('Miguel Torres', 'miguel.torres@ejemplo.com', '+52 55 7890-1234', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewmVg7BYMzfpcXSO'),
-('Patricia Ruiz', 'patricia.ruiz@ejemplo.com', '+52 55 8901-2345', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewmVg7BYMzfpcXSO'),
-('Roberto Jiménez', 'roberto.jimenez@ejemplo.com', '+52 55 9012-3456', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewmVg7BYMzfpcXSO'),
-('Carmen Morales', 'carmen.morales@ejemplo.com', '+52 55 0123-4567', '$2b$12$LQv3c1yqBWVHxkd0LHAkCOYz6TtxMQJqhN8/LewmVg7BYMzfpcXSO');
+('Miguel Torres', 'miguel.torres@ejemplo.com', '+52 55 7890-1234', '$2a$12$Jaqnh33bUDg2Q1s2cGMjsulJJGCyvjtrI7Pc0jJwJ8LEMpL97FIfW'),
+('Patricia Ruiz', 'patricia.ruiz@ejemplo.com', '+52 55 8901-2345', '$2a$12$Jaqnh33bUDg2Q1s2cGMjsulJJGCyvjtrI7Pc0jJwJ8LEMpL97FIfW'),
+('Roberto Jiménez', 'roberto.jimenez@ejemplo.com', '+52 55 9012-3456', '$2a$12$Jaqnh33bUDg2Q1s2cGMjsulJJGCyvjtrI7Pc0jJwJ8LEMpL97FIfW'),
+('Carmen Morales', 'carmen.morales@ejemplo.com', '+52 55 0123-4567', '$2a$12$Jaqnh33bUDg2Q1s2cGMjsulJJGCyvjtrI7Pc0jJwJ8LEMpL97FIfW'),
+('Admin','admin123@gmail.com','+506 88884986','$2a$12$Jaqnh33bUDg2Q1s2cGMjsulJJGCyvjtrI7Pc0jJwJ8LEMpL97FIfW'),
+('Kevin','kevinhch999@gmail.com','+506 86189348','$2a$12$Jaqnh33bUDg2Q1s2cGMjsulJJGCyvjtrI7Pc0jJwJ8LEMpL97FIfW');
 
 -- ===================================================================
 -- PROCEDIMIENTOS ALMACENADOS (OPCIONAL)

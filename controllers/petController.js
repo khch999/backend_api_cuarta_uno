@@ -71,6 +71,25 @@ class PetController {
         }
     }
 
+    //obtener mascotas de cada usuario
+    static async getMyPets(req, res) {
+        try {
+            const userId = req.user.userId;
+            const pets = await Pet.getByUserId(userId);
+
+            res.status(200).json({
+                success: true,
+                data: pets
+            });
+        } catch (error) {
+            console.error("Error en Pets.getMyPets:", error);
+            res.status(500).json({
+                success: false,
+                message: "Error al obtener datos de las mascotas por usuario."
+            });
+        }
+    }
+
     // Crear nueva mascota
     static async createPet(req, res) {
         try {

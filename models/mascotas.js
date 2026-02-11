@@ -47,5 +47,22 @@ class Pet {
         throw new Error('Error al obtener mascota por ID.');
     }
     }
+
+    //mascota por id del usuario
+    static async getByUserId(userId){
+      try {
+        const [rows] = await pool.execute(
+        `Select id, nombre, raza, especie, edad
+        From mascotas
+        WHERE propietario_id = ?`,
+        [userId]
+        );
+        return rows;
+      } catch (error) {
+        console.error('Error en Pet.getByUserId:', error);
+        throw new Error('Error al obtener mascotas del usuario');
+      }
+      
+    }
 }
 module.exports = Pet;
