@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const PetController = require('../controllers/petController');
 const {validatePetId} = require('../middleware/validation');
-const authenticateToken = require('../middleware/auth');
+const {authenticateToken} = require('../middleware/auth');
 
 /**
  * @route GET /pets/my
