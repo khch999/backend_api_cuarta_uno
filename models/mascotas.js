@@ -100,11 +100,11 @@ class Pet {
     //actualizar mascota
     static async update(id, petData) {
       try {
-        const {nombre, especie, raza, edad, historial_medico} = petData;
+        const {nombre, especie, raza, edad, historial_medico, propietario_id} = petData;
 
         const [result] = await pool.execute(
-          `UPDATE mascotas SET nombre = ?, especie = ?, raza = ?, edad = ?, historial_medico = ?
-          WHERE id = ?`, [nombre, especie, raza, edad, historial_medico, id]
+          `UPDATE mascotas SET nombre = ?, especie = ?, raza = ?, edad = ?, historial_medico = ?, propietario_id = ?
+          WHERE id = ?`, [nombre, especie, raza, edad, historial_medico, propietario_id, id]
         );
       if (result.affectedRows === 0) {
         return null;
