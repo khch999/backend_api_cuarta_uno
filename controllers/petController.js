@@ -76,7 +76,7 @@ class PetController {
     static async getMyPets(req, res) {
         try {
             const userId = req.user.userId;
-            const pets = await Pet.findByOwner(ownerID);
+            const pets = await Pet.findByOwner(userId);
 
             res.status(200).json({
                 success: true,
