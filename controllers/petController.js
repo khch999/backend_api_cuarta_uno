@@ -6,7 +6,6 @@
 const express = require('express');
 const Pet = require('../models/mascotas');
 const User = require('../models/User');
-const { use } = require('react');
 
 class PetController {
        static async getAllPets(req, res) {
