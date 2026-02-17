@@ -41,8 +41,9 @@ const authenticateToken = async (req, res, next) => {
 
         // Agregar información del usuario al request
         req.user = {
-            userId: decoded.userId,
-            email: decoded.email
+            userId: user.id, //cambie el decoded por el user
+            email: user.email,
+            rol: user.rol //rol
         };
 
         next();
@@ -93,8 +94,9 @@ const optionalAuth = async (req, res, next) => {
 
         if (user) {
             req.user = {
-                userId: decoded.userId,
-                email: decoded.email
+                userId: user.userId,
+                email: user.email,
+                rol: user.rol //rol
             };
         }
 
@@ -119,8 +121,7 @@ const authorizeRoles = (allowedRoles = []) => {
                 success: false,
                 message: 'Autenticación requerida'
             });
-        }
-
+        }        
         // Aquí se podría agregar lógica de roles en el futuro
         // if (!allowedRoles.includes(req.user.role)) {
         //     return res.status(403).json({
@@ -128,7 +129,12 @@ const authorizeRoles = (allowedRoles = []) => {
         //         message: 'No tienes permisos para acceder a este recurso'
         //     });
         // }
-
+        if (!allowedRoles.includes(req.user.rol)) {
+            return res.status(403).json({
+                success: false,
+                message: 'Usuario no autorizado'
+            });
+        }
         next();
     };
 };

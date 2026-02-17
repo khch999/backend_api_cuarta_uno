@@ -57,7 +57,8 @@ class AuthController {
             const token = jwt.sign(
                 { 
                     userId: newUser.id, 
-                    email: newUser.email 
+                    email: newUser.email,
+                    rol: newUser.rol //rol
                 },
                 process.env.JWT_SECRET || 'default_secret_key',
                 { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
@@ -124,7 +125,8 @@ class AuthController {
             const token = jwt.sign(
                 { 
                     userId: user.id, 
-                    email: user.email 
+                    email: user.email,
+                    rol: user.rol //rol 
                 },
                 process.env.JWT_SECRET || 'default_secret_key',
                 { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
@@ -279,10 +281,11 @@ class AuthController {
         try {
             const userId = req.user.userId;
             const email = req.user.email;
+            const rol = req.user.rol;//rol
 
             // Generar nuevo token
             const newToken = jwt.sign(
-                { userId, email },
+                { userId, email, rol },//rol
                 process.env.JWT_SECRET || 'default_secret_key',
                 { expiresIn: process.env.JWT_EXPIRES_IN || '24h' }
             );

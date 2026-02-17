@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const PetController = require('../controllers/petController');
 const {validatePetId} = require('../middleware/validation');
-const {authenticateToken} = require('../middleware/auth');
+const {authenticateToken, authorizeRoles} = require('../middleware/auth');
 
 /**
  * @route GET /pets/my
@@ -12,11 +12,33 @@ const {authenticateToken} = require('../middleware/auth');
 router.get('/my', authenticateToken, PetController.getMyPets);
 
 /**
+ * @route POST /pets/
+ * @description Crea y asigna una nueva mascota a un usuario
+ * @access No Public
+ */
+router.post('/', authenticateToken, authorizeRoles('admin') ,PetController.createPet);
+
+/**
+ * @route PUT /pets/
+ * @description Modifica los datos de una mascota.
+ * @access No Public
+ */
+router.put('/:id', authenticateToken, authorizeRoles('admin') ,PetController.updatePet);
+
+/**
+ * @route DELETE /pets/:id
+ * @description Elimina una mascota
+ * @access No Public
+ * @param {number} id - ID del usuario a eliminar
+ */
+router.delete('/:id', authenticateToken, authorizeRoles('admin'), PetController.deletePet);
+
+/**
  * @route GET /pets/:id
  * @description Obtiene la ficha médica de una mascota específica
- * @access Public
+ * @access No Public
  */
-router.get('/:id', PetController.getPetMedicalPage);
+router.get('/:id', authenticateToken, PetController.getPetMedicalPage);
 
 /**
  * @route GET /pets

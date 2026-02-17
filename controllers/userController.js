@@ -155,6 +155,7 @@ class UserController {
      */
     static async updateUser(req, res) {
         try {
+            console.log("Datos recibidos en updateUser:", req.body);
             // Verificar errores de validación
             const errors = validationResult(req);
             if (!errors.isEmpty()) {

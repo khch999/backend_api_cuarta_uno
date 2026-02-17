@@ -26,6 +26,7 @@ class User {
         this.email = userData.email;
         this.telefono = userData.telefono;
         this.password = userData.password;
+        this.rol = userData.rol;//rol 
         this.fecha_creacion = userData.fecha_creacion;
         this.fecha_actualizacion = userData.fecha_actualizacion;
     }
@@ -37,7 +38,7 @@ class User {
     static async findAll() {
         try {
             const [rows] = await pool.execute(
-                'SELECT id, nombre, email, telefono, fecha_creacion, fecha_actualizacion FROM usuarios ORDER BY fecha_creacion DESC'
+                'SELECT id, nombre, email, telefono, rol, fecha_creacion, fecha_actualizacion FROM usuarios ORDER BY fecha_creacion DESC'
             );
             return rows;
         } catch (error) {
@@ -54,7 +55,7 @@ class User {
     static async findById(id) {
         try {
             const [rows] = await pool.execute(
-                'SELECT id, nombre, email, telefono, fecha_creacion, fecha_actualizacion FROM usuarios WHERE id = ?',
+                'SELECT id, nombre, email, telefono, rol, fecha_creacion, fecha_actualizacion FROM usuarios WHERE id = ?',
                 [id]
             );
             return rows.length > 0 ? rows[0] : null;
@@ -72,7 +73,7 @@ class User {
     static async findByEmail(email) {
         try {
             const [rows] = await pool.execute(
-                'SELECT id, nombre, email, telefono, fecha_creacion, fecha_actualizacion FROM usuarios WHERE email = ?',
+                'SELECT id, nombre, email, telefono, rol, fecha_creacion, fecha_actualizacion FROM usuarios WHERE email = ?',
                 [email]
             );
             return rows.length > 0 ? rows[0] : null;
@@ -93,11 +94,11 @@ class User {
      */
     static async create(userData) {
         try {
-            const { nombre, email, telefono, password } = userData;
+            const { nombre, email, telefono, password, rol = 'owner' } = userData;
             
             const [result] = await pool.execute(
-                'INSERT INTO usuarios (nombre, email, telefono, password, fecha_creacion, fecha_actualizacion) VALUES (?, ?, ?, ?, NOW(), NOW())',
-                [nombre, email, telefono, password]
+                'INSERT INTO usuarios (nombre, email, telefono, password, rol, fecha_creacion, fecha_actualizacion) VALUES (?, ?, ?, ?, ?, NOW(), NOW())',
+                [nombre, email, telefono, password, rol]
             );
 
             // Obtener el usuario recién creado (sin contraseña)
@@ -127,6 +128,12 @@ class User {
             
             let query = 'UPDATE usuarios SET nombre = ?, email = ?, telefono = ?, fecha_actualizacion = NOW()';
             let params = [nombre, email, telefono];
+
+            //solo actualizar rol si viene definido
+            // if (rol !== "undefined") {
+            //     query += ', rol = ?';
+            //     params.push(rol);
+            // }
             
             // Si se proporciona una nueva contraseña, incluirla en la actualización
             if (password) {
@@ -202,7 +209,7 @@ class User {
     static async searchByName(nombre) {
         try {
             const [rows] = await pool.execute(
-                'SELECT id, nombre, email, telefono, fecha_creacion, fecha_actualizacion FROM usuarios WHERE nombre LIKE ? ORDER BY nombre',
+                'SELECT id, nombre, email, telefono, rol, fecha_creacion, fecha_actualizacion FROM usuarios WHERE nombre LIKE ? ORDER BY nombre',
                 [`%${nombre}%`]
             );
             return rows;
@@ -246,7 +253,7 @@ class User {
             
             // Obtener usuarios paginados usando interpolación directa
             const [users] = await pool.execute(
-                `SELECT id, nombre, email, telefono, fecha_creacion, fecha_actualizacion FROM usuarios ORDER BY fecha_creacion DESC LIMIT ${limitInt} OFFSET ${offset}`
+                `SELECT id, nombre, email, telefono, rol, fecha_creacion, fecha_actualizacion FROM usuarios ORDER BY fecha_creacion DESC LIMIT ${limitInt} OFFSET ${offset}`
             );
 
             // Obtener total de usuarios
