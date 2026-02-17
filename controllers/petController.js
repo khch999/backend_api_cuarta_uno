@@ -5,6 +5,7 @@
 
 const e = require('express');
 const Pet = require('../models/mascotas');
+const User = require('../models/User');
 
 class PetController {
        static async getAllPets(req, res) {
@@ -94,17 +95,24 @@ class PetController {
     // Crear nueva mascota
     static async createPet(req, res) {
         try {
-            const { nombre, especie, raza, edad, historial_medico} = req.body;
-            const propietario_id = req.user.userId; //token
+            const { nombre, especie, raza, edad, historial_medico, propietario_id} = req.body;
 
-            if (!nombre || !especie) {
+            if (!nombre || !especie  || !propietario_id) {
                 return res.status(400).json({
                     success: false,
-                    message: 'Los campos nombre y especie son obligatorios.'
+                    message: 'Los campos nombre, especie y id propietario son obligatorios.'
+                });
+            }
+            //validación de que el propietario exista
+            const user = await User.findById(propietario_id);
+            if (!user) {
+                return res.status(404).json({
+                    success: false,
+                    message: "El propietario no existe"
                 });
             }
 
-            const exists = await Pet.existsForOwner(nombre , propietario_id);
+            const exists = await Pet.existsForOwner(nombre, propietario_id);
             if (exists) {
                 return res.status(409).json({
                     success: false,
