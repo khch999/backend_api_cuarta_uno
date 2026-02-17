@@ -3,9 +3,10 @@
  * @description Maneja las operaciones HTTP de solo lectura para Mascotas
  */
 
-const e = require('express');
+const express = require('express');
 const Pet = require('../models/mascotas');
 const User = require('../models/User');
+const { use } = require('react');
 
 class PetController {
        static async getAllPets(req, res) {
@@ -137,7 +138,6 @@ class PetController {
 static async updatePet(req, res) {
     try {
         const {id} = req.params;
-        const propietario_id = req.user.userId;
 
         const pet = await Pet.findById(id);
         if (!pet) {
@@ -146,6 +146,17 @@ static async updatePet(req, res) {
                 message: 'Mascota no encontrada.'
             });
         }
+
+        if (req.body.propietario_id) {
+            const user = await User.findById(req.body.propietario_id);
+            if (!user) {
+                return res.status(404).json({
+                    success: false,
+                    message: 'Propietario no existe.'
+                });
+            }
+        }
+
         const updatePet = await Pet.update(id, req.body);
         res.status(200).json({
             success: true,
