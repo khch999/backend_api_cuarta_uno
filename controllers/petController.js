@@ -1,6 +1,6 @@
 /**
  * Controlador de Mascotas
- * @description Maneja las operaciones HTTP de solo lectura para Mascotas
+ * @description Maneja las operaciones HTTP de CRUD y lectura para Mascotas
  */
 
 const express = require('express');

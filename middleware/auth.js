@@ -112,10 +112,9 @@ const optionalAuth = async (req, res, next) => {
  * @param {Array} allowedRoles - Roles permitidos
  * @returns {Function} Middleware function
  */
-const authorizeRoles = (allowedRoles = []) => {
+const authorizeRoles = (...allowedRoles) => {
     return (req, res, next) => {
-        // Por ahora, solo verificamos que el usuario esté autenticado
-        // En el futuro se puede extender para manejar roles específicos
+        //'admin' y 'owner'
         if (!req.user) {
             return res.status(401).json({
                 success: false,
@@ -132,7 +131,7 @@ const authorizeRoles = (allowedRoles = []) => {
         if (!allowedRoles.includes(req.user.rol)) {
             return res.status(403).json({
                 success: false,
-                message: 'Usuario no autorizado'
+                message: 'No tienes permisos para acceder a este recurso'
             });
         }
         next();

@@ -17,6 +17,7 @@ const { validateJSON, sanitizeInput, validateContentType } = require('./middlewa
 const userRoutes = require('./routes/userRoutes');
 const authRoutes = require('./routes/authRoutes');
 const petRoutes = require('./routes/petRoutes');//ruta mascotas
+const dateRoutes = require('./routes/datesRoutes'); //ruta citas
 
 // Crear aplicación Express
 const app = express();
@@ -71,6 +72,7 @@ app.get('/', (req, res) => {
             users: `${API_PREFIX}/users`,
             auth: `${API_PREFIX}/auth`,
             pets: `${API_PREFIX}/pets`,//ruta mascotas
+            dates: `${API_PREFIX}/dates`, //ruta de citas
             health: '/',
             docs: '/docs'
         }
@@ -106,6 +108,7 @@ app.get('/health', async (req, res) => {
 app.use(`${API_PREFIX}/users`, userRoutes);
 app.use(`${API_PREFIX}/auth`, authRoutes);
 app.use(`${API_PREFIX}/pets`, petRoutes);//ruta mascotas
+app.use(`${API_PREFIX}/dates`, dateRoutes);//ruta citas
 
 // Ruta para documentación básica
 app.get('/docs', (req, res) => {
@@ -132,7 +135,17 @@ app.get('/docs', (req, res) => {
 
             //Mascotas
             'GET /pets': 'Obtener todas las mascotas',//ruta mascotas
-            'GET /pets/:id': 'Obtener mascota por ID' //ruta mascotas/id
+            'GET /pets/:id': 'Obtener ficha de mascota por ID', //ruta mascotas/id
+            'GET /pets/my' : 'Obtener todas las mascotas de un usuario',
+            'POST /pets': 'Crear mascota',
+            'PUT /pets/:id' : 'Actualizar datos de mascota',
+            'DELETE /pets/:id' : 'Eliminar una mascota',
+            //Citas
+            'GET /dates' : 'Obtener todas las citas ',
+            'GET /dates/my' : 'Obtener mis citas agendadas',
+            'POST /dates' : 'Crear cita',
+            'PATCH /dates/:id/cancel' : 'Cancelar una cita',
+            'PATCH /dates/:id/state' : 'Actualizar el estado de una cita'
         },
         examples: {
             register: {
@@ -164,6 +177,7 @@ app.use((req, res) => {
             docs: '/docs',
             auth: `${API_PREFIX}/auth`,
             pets: `${API_PREFIX}/pets`, //ruta mascotas
+            dates: `${API_PREFIX}/dates`,//ruta citas
             users: `${API_PREFIX}/users`
         }
     });

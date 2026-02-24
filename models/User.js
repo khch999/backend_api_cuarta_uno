@@ -242,7 +242,7 @@ class User {
     static async paginate(page = 1, limit = 10) {
         try {
             // Asegurar que page y limit sean números enteros
-            const pageInt = parseInt(page) || 1;
+            let pageInt = parseInt(page) || 1;
             const limitInt = parseInt(limit) || 10;
             const offset = (pageInt - 1) * limitInt;
             
