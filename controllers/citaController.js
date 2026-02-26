@@ -60,7 +60,7 @@ class CitaController{
                 });
             }
             //verificar que la mascota sea del propietario  
-            if (mascota.propietario_id != propietario_id) {
+            if (mascota.id_propietario != propietario_id) {
                 return res.status(403).json({
                     success: false,
                     message: 'Solo puedes reservar citas para tus propias mascotas.'
