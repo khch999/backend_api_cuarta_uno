@@ -17,6 +17,15 @@ class Cita{
         const  dayDateTime = new Date(`${fecha}T${hora}:00`);
         return dayDateTime > now;
     }
+    //verificar que la hora no este agendada
+    static async getHoursByDate(fecha){
+        const [rows] = await pool.execute(
+            `SELECT hora FROM citas WHERE fecha = ?`,
+            [fecha]
+        );
+        return rows.map(r => r.hora.slice(0,5));
+    }
+
     //crear cita
     static async create(datesData){
         try {

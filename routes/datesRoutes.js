@@ -19,6 +19,13 @@ router.get('/', CitaController.getAllDates);
 router.get('/my', authenticateToken, CitaController.getMyDates);
 
 /**
+ * @route GET /dates/available
+ * @description Obtiene las fechas disponibles
+ * @returns {Object} fechas disponibles
+ */
+router.get('/available', CitaController.getAvailableHours);
+
+/**
  * @route POST /dates/
  * @description Crea y asigna una nueva cita a la mascota de un usuario
  * @access No Public

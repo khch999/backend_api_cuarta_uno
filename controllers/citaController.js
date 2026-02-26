@@ -6,6 +6,38 @@ const express = require('express');
 const Cita = require('../models/citas');
 const Pet = require('../models/mascotas');
 class CitaController{
+    static async getAvailableHours(req, res){
+        try {
+            const {fecha} = req.query;
+            if(!fecha){
+                return res.status(400).json
+                ({
+                    success: true,
+                    message:'Fecha requerida'
+                });
+            }
+        const horasBase = [];
+
+        for (let h = 0; h < 24; h++) {
+            const hora = `${h.toString().padStart(2, "0")}:00`;
+            if (Cita.isValidSchedule(fecha, hora)) {
+                horasBase.push(hora);
+            }            
+        }
+        const horasOcupadas = await Cita.getHoursByDate(fecha);
+        const disponibles = horasBase.filter(
+            h => !horasOcupadas.includes(h)
+        );
+        res.json(disponibles);
+        }catch (error) {
+            console.error(error);
+            res.status(500).json({
+                success: false,
+                message: "Error obtenindo horas disponibles."
+            }); 
+        }
+    }
+
     //Usuario crea cuenta
     static async createDate(req, res){
         try {
