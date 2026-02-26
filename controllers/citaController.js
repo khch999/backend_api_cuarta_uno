@@ -51,7 +51,8 @@ class CitaController{
             const {fecha, hora, motivo, mascota_id} = req.body;
             const mascota = await Pet.findById(mascota_id);
             console.log("User ID del token:", propietario_id);
-            console.log("Mascota propietario_id:", mascota?.propietario_id);
+            console.log("Mascota propietario_id:", mascota?.id_propietario);
+            console.log("Objeto mascota completo:", mascota);
             //verificar que exista la mascota
             if (!mascota) {
                 return res.status(404).json({
