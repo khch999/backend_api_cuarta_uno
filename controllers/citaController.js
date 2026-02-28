@@ -38,7 +38,7 @@ class CitaController{
         }
     }
 
-    //Usuario crea cuenta
+    //Usuario crea cita
     static async createDate(req, res){
         try {
             if (req.user.rol != 'owner') {
@@ -50,9 +50,6 @@ class CitaController{
             const propietario_id = req.user.userId;
             const {fecha, hora, motivo, mascota_id} = req.body;
             const mascota = await Pet.findById(mascota_id);
-            console.log("User ID del token:", propietario_id);
-            console.log("Mascota propietario_id:", mascota?.id_propietario);
-            console.log("Objeto mascota completo:", mascota);
             //verificar que exista la mascota
             if (!mascota) {
                 return res.status(404).json({
@@ -61,7 +58,7 @@ class CitaController{
                 });
             }
             //verificar que la mascota sea del propietario  
-            if (mascota.id_propietario != propietario_id) {
+            if (mascota.propietario_id != propietario_id) {
                 return res.status(403).json({
                     success: false,
                     message: 'Solo puedes reservar citas para tus propias mascotas.'

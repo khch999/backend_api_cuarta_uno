@@ -37,7 +37,7 @@ class Pet {
         const [rows] = await pool.execute(
             `SELECT *
              FROM vista_mascotas_propietarios
-             WHERE id_mascota = ?`,
+             WHERE id = ?`,
             [id]
         );
 
